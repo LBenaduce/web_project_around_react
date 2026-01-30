@@ -11,3 +11,20 @@ export default function Card({ card }) {
     </li>
   );
 }
+
+import "./Card.css";
+
+export default function Card({ card }) {
+  return (
+    <li className="card">
+      <img
+        src={card.link}
+        alt={card.name}
+        className="card__image"
+      />
+      <div className="card__description">
+        <h2 className="card__title">{card.name}</h2>
+      </div>
+    </li>
+  );
+}
