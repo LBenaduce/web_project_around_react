@@ -5,7 +5,6 @@ import EditProfile from "./components/Popup/components/EditProfile/EditProfile";
 import EditAvatar from "./components/Popup/components/EditAvatar/EditAvatar";
 import Card from "./components/Card/Card";
 
-
 const cards = [
   {
     isLiked: false,
@@ -45,15 +44,7 @@ export default function Main() {
       </section>
 
       <section className="elements page__section">
-  <ul className="elements__list">
-    {cards.map((card) => (
-      <Card key={card._id} card={card} />
-    ))}
-  </ul>
-</section>
-
-      <section className="cards page__section">
-        <ul className="cards__list">
+        <ul className="elements__list">
           {cards.map((card) => (
             <Card key={card._id} card={card} />
           ))}
