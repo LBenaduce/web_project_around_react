@@ -44,6 +44,14 @@ export default function Main() {
         <button onClick={() => handleOpenPopup(newCardPopup)} />
       </section>
 
+      <section className="elements page__section">
+  <ul className="elements__list">
+    {cards.map((card) => (
+      <Card key={card._id} card={card} />
+    ))}
+  </ul>
+</section>
+
       <section className="cards page__section">
         <ul className="cards__list">
           {cards.map((card) => (
