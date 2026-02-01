@@ -1,5 +1,9 @@
 .footer {
   width: 100%;
+  background-color: #000;
+}
+
+.footer__container {
   max-width: 880px;
   margin: 0 auto;
   padding: 67px 0 60px;
@@ -14,7 +18,7 @@
 }
 
 @media screen and (max-width: 920px) {
-  .footer {
+  .footer__container {
     padding: 48px 19px 36px;
   }
 
