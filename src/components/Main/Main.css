@@ -1,0 +1,18 @@
+.content {
+  flex: 1;
+}
+
+.cards {
+  max-width: 880px;
+  margin: 0 auto;
+  padding-bottom: 66px;
+}
+
+.cards__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+  gap: 20px 17px;
+}
