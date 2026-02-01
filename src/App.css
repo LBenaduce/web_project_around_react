@@ -1,0 +1,57 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  min-height: 100vh;
+  background-color: #000;
+  color: #fff;
+  font-family: Inter, Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+button:focus {
+  outline: none;
+}
+
+.content {
+  flex: 1;
+}
+
+.cards {
+  max-width: 880px;
+  margin: 0 auto;
+  padding-bottom: 66px;
+}
+
+.cards__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+  gap: 20px 17px;
+}
+
+.popup__figure {
+  margin: 0;
+}
