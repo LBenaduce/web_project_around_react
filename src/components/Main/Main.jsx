@@ -1,6 +1,6 @@
 import "./Main.css";
-import Profile from "./Profile/Profile";
-import Card from "./Card/Card";
+import Profile from "../Profile/Profile";
+import Card from "../Card/Card";
 
 export default function Main({
   cards,
@@ -13,15 +13,13 @@ export default function Main({
 }) {
   return (
     <main className="content">
-      {/* Seção do perfil */}
       <Profile
         onEditProfile={onEditProfile}
         onAddPlace={onAddPlace}
         onEditAvatar={onEditAvatar}
       />
 
-      {/* Seção dos cards */}
-      <section className="cards" aria-label="Cards de lugares">
+      <section className="cards">
         <ul className="cards__list">
           {cards.map((card) => (
             <Card
