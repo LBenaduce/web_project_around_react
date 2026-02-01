@@ -1,5 +1,5 @@
 import "./Main.css";
-import Profile from "../Profile/Profile";
+import Profile from "./Profile/Profile";
 import Card from "./Card/Card";
 
 export default function Main({
