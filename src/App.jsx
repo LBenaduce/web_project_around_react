@@ -5,6 +5,9 @@ import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
 import Footer from "./components/Footer/Footer";
 import Popup from "./components/Popup/Popup";
+import EditProfile from "./components/EditProfile/EditProfile";
+import EditAvatar from "./components/EditAvatar/EditAvatar";
+import NewCard from "./components/NewCard/NewCard";
 
 export default function App() {
   const [popup, setPopup] = useState(null);
@@ -75,7 +78,42 @@ export default function App() {
 
       <Footer />
 
-      <Popup isOpen={popup !== null} onClose={closeAllPopups} />
+      <Popup
+        isOpen={popup === "edit-profile"}
+        title="Edit profile"
+        onClose={closeAllPopups}
+      >
+        <EditProfile />
+      </Popup>
+
+      <Popup
+        isOpen={popup === "new-card"}
+        title="New place"
+        onClose={closeAllPopups}
+      >
+        <NewCard />
+      </Popup>
+
+      <Popup
+        isOpen={popup === "edit-avatar"}
+        title="Change profile picture"
+        onClose={closeAllPopups}
+      >
+        <EditAvatar />
+      </Popup>
+
+      <Popup isOpen={popup === "image"} onClose={closeAllPopups} isImage>
+        {selectedCard ? (
+          <figure>
+            <img
+              className="popup__zoom"
+              src={selectedCard.link}
+              alt={selectedCard.name}
+            />
+            <figcaption className="popup__caption">{selectedCard.name}</figcaption>
+          </figure>
+        ) : null}
+      </Popup>
     </div>
   );
 }
