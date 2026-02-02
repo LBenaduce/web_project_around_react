@@ -23,12 +23,20 @@ const initialCards = [
 
 export default function Main() {
   const [popup, setPopup] = useState(null);
-  const [cards] = useState(initialCards);
+  const [cards, setCards] = useState(initialCards);
 
   const handleEditProfileClick = () => setPopup("edit-profile");
   const handleAddPlaceClick = () => setPopup("new-card");
   const handleEditAvatarClick = () => setPopup("edit-avatar");
   const closeAllPopups = () => setPopup(null);
+
+  const handleCardLike = (card) => {
+    setCards((prevCards) =>
+      prevCards.map((c) =>
+        c._id === card._id ? { ...c, isLiked: !c.isLiked } : c
+      )
+    );
+  };
 
   return (
     <main className="content">
@@ -41,7 +49,7 @@ export default function Main() {
       <section className="cards">
         <ul className="cards__list">
           {cards.map((card) => (
-            <Card key={card._id} card={card} />
+            <Card key={card._id} card={card} onCardLike={handleCardLike} />
           ))}
         </ul>
       </section>

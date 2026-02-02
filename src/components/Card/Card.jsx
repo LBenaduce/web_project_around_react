@@ -1,32 +1,25 @@
-import "./Card.css";
-
-export default function Card({ card, onCardClick, onCardLike, onCardDelete }) {
-  const { name, link, isLiked } = card;
+export default function Card({ card, onCardLike }) {
+  const likeButtonClassName = `card__like-button ${
+    card.isLiked ? "card__like-button_active" : ""
+  }`;
 
   return (
     <li className="card">
-      <img
-        className="card__image"
-        src={link}
-        alt={name}
-        onClick={() => onCardClick(card)}
+      <button
+        type="button"
+        className="card__delete-button"
+        aria-label="Delete card"
       />
 
-      <button
-        className="card__delete-button"
-        type="button"
-        aria-label="Excluir"
-        onClick={() => onCardDelete(card)}
-      />
+      <img className="card__image" src={card.link} alt={card.name} />
 
       <div className="card__description">
-        <h2 className="card__title">{name}</h2>
+        <h2 className="card__title">{card.name}</h2>
+
         <button
-          className={`card__like-button ${
-            isLiked ? "card__like-button_active" : ""
-          }`}
           type="button"
-          aria-label="Curtir"
+          className={likeButtonClassName}
+          aria-label="Like"
           onClick={() => onCardLike(card)}
         />
       </div>

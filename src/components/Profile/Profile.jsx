@@ -1,22 +1,23 @@
-export default function Profile({
-  onEditProfile,
-  onAddPlace,
-  onEditAvatar,
-}) {
+export default function Profile({ onEditProfile, onAddPlace, onEditAvatar }) {
   return (
     <section className="profile">
-      <div className="profile__avatar-container">
-        <button
-          type="button"
-          className="profile__avatar-edit"
-          onClick={onEditAvatar}
-          aria-label="Change profile picture"
+      <button
+        type="button"
+        className="profile__avatar-button"
+        onClick={onEditAvatar}
+        aria-label="Edit avatar"
+      >
+        <img
+          className="profile__avatar"
+          src="https://i.pravatar.cc/300"
+          alt="Profile avatar"
         />
-      </div>
+      </button>
 
       <div className="profile__info">
         <h1 className="profile__name">Jacques Cousteau</h1>
         <p className="profile__about">Explorer</p>
+
         <button
           type="button"
           className="profile__edit-button"
@@ -29,7 +30,7 @@ export default function Profile({
         type="button"
         className="profile__add-button"
         onClick={onAddPlace}
-        aria-label="Add new place"
+        aria-label="Add place"
       />
     </section>
   );
