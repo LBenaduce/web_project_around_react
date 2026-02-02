@@ -8,11 +8,15 @@ export default function Popup({
   isImage = false,
 }) {
   return (
-    <div className={`popup ${isOpen ? "popup_opened" : ""}`}>
+    <div
+      className={`popup ${isOpen ? "popup_opened" : "popup-hidden"}`}
+      onMouseDown={onClose}
+    >
       <div
         className={`popup__conteiner ${
           isImage ? "popup__conteiner_type_image" : ""
         }`}
+        onMouseDown={(e) => e.stopPropagation()}
       >
         <button
           type="button"
