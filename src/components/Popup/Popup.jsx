@@ -1,22 +1,28 @@
 import "./popup.css";
 
-export default function Popup({ isOpen, title, children, onClose, isImage = false }) {
+export default function Popup({
+  isOpen,
+  title,
+  children,
+  onClose,
+  isImage = false,
+}) {
   return (
-    <div
-      className={`popup ${isOpen ? "" : "popup-hidden"}`}
-      onMouseDown={onClose}
-    >
+    <div className={`popup ${isOpen ? "popup_opened" : ""}`}>
       <div
-        className={isImage ? "popup__conteiner-zoom" : "popup__conteiner"}
-        onMouseDown={(e) => e.stopPropagation()}
+        className={`popup__conteiner ${
+          isImage ? "popup__conteiner_type_image" : ""
+        }`}
       >
         <button
           type="button"
-          className={isImage ? "popup__close-zoom" : "popup__close"}
+          className="popup__close"
           onClick={onClose}
           aria-label="Close popup"
         />
-        {!isImage && title ? <h2 className="popup__text">{title}</h2> : null}
+
+        {!isImage && <h2 className="popup__title">{title}</h2>}
+
         {children}
       </div>
     </div>
