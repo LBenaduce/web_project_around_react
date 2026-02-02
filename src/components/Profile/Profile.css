@@ -47,7 +47,7 @@
   border: 1px solid #fff;
   background: transparent url("../../images/pen.svg") center/contain no-repeat;
   cursor: pointer;
-  background-size: 10px 10px; /* ou 12px 12px */
+  background-size: 10px 10px; 
 }
 
 .profile__add-button {

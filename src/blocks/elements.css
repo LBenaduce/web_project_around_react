@@ -74,10 +74,6 @@
 
 }
 
-.elements__like:hover {
-  opacity: 0.6;
-}
-
 .elements__remove {
   background: url(../images/trash.svg) center no-repeat;
   border: none;
