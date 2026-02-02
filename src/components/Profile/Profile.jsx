@@ -1,4 +1,5 @@
 import "./Profile.css";
+import avatar from "../../images/avatar.png";
 
 export default function Profile({ onEditProfile, onAddPlace, onEditAvatar }) {
   return (
@@ -11,7 +12,7 @@ export default function Profile({ onEditProfile, onAddPlace, onEditAvatar }) {
       >
         <img
           className="profile__avatar"
-          src="../../images/avatar.jpg"
+          src={avatar}
           alt="Profile avatar"
         />
       </button>
