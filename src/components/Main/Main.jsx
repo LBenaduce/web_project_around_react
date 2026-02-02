@@ -2,9 +2,9 @@ import { useState } from "react";
 import Profile from "../Profile/Profile";
 import Card from "../Card/Card";
 import Popup from "../Popup/Popup";
-import EditProfile from "../Popup/components/EditProfile/EditProfile";
-import EditAvatar from "../Popup/components/EditAvatar/EditAvatar";
-import NewCard from "../Popup/components/NewCard/NewCard";
+import EditProfile from "../EditProfile/EditProfile";
+import EditAvatar from "../EditAvatar/EditAvatar";
+import NewCard from "../NewCard/NewCard";
 
 const initialCards = [
   {
