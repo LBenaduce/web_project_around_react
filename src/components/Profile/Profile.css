@@ -31,6 +31,7 @@
   margin: 0;
   font-size: 42px;
   font-weight: 500;
+  color: #fff;
 }
 
 .profile__description {
@@ -46,6 +47,7 @@
   border: 1px solid #fff;
   background: transparent url("../../images/pen.svg") center/contain no-repeat;
   cursor: pointer;
+  background-size: 10px 10px; /* ou 12px 12px */
 }
 
 .profile__add-button {
