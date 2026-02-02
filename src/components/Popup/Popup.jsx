@@ -1,18 +1,17 @@
-export default function Popup({ onClose, title, children }) {
+export default function Popup({ title, children, onClose }) {
   return (
-    <div className="popup">
+    <div className="popup popup_opened" onMouseDown={onClose}>
       <div
-        className={`popup__content ${
-          !title ? "popup__content_content_image" : ""
-        }`}
+        className="popup__container"
+        onMouseDown={(e) => e.stopPropagation()}
       >
         <button
-          className="popup__close"
-          aria-label="Close modal"
           type="button"
+          className="popup__close"
           onClick={onClose}
+          aria-label="Close popup"
         />
-        {title && <h3 className="popup__title">{title}</h3>}
+        <h2 className="popup__title">{title}</h2>
         {children}
       </div>
     </div>
