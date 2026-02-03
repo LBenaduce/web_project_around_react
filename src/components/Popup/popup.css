@@ -19,15 +19,16 @@
 .popup__conteiner {
   width: 430px;
   min-height: 330px;
-  background-color: white;
+  background-color: #ffffff;
   border-radius: 10px;
   box-sizing: border-box;
   padding: 34px 36px 36px;
   box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
   position: relative;
 }
+
 .popup__close {
-  background: transparent url(../images/Close.svg) center no-repeat;
+  background: transparent url(../../images/Close.svg) center no-repeat;
   position: absolute;
   width: 40px;
   height: 40px;
@@ -39,7 +40,7 @@
 }
 
 .popup__close-zoom {
-  background: transparent url(../images/Close.svg) center no-repeat;
+  background: transparent url(../../images/Close.svg) center no-repeat;
   position: absolute;
   width: 40px;
   height: 40px;
@@ -49,6 +50,7 @@
   border: none;
   cursor: pointer;
 }
+
 .popup__close:hover {
   opacity: 0.6;
 }
@@ -58,6 +60,7 @@
   font-weight: 900;
   font-size: 24px;
   margin: 0 0 54px;
+  color: #000000;
 }
 
 .popup__profile {
@@ -65,6 +68,7 @@
   flex-direction: column;
   width: 358px;
 }
+
 .popup__name {
   font-weight: 400;
   font-size: 14px;
@@ -98,6 +102,7 @@
 .popup__text-confirm {
   margin-bottom: 38px;
 }
+
 .popup__save-confirm {
   width: 358px;
   height: 50px;
@@ -106,15 +111,12 @@
   font-size: 18px;
   line-height: 100%;
   text-align: center;
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 2px;
   cursor: pointer;
 }
 
-.popup__save:hover {
-  opacity: 0.6;
-}
 .popup__save {
   width: 358px;
   height: 50px;
@@ -123,11 +125,15 @@
   font-size: 18px;
   line-height: 100%;
   text-align: center;
-  color: white;
+  color: #ffffff;
   border: none;
   border-radius: 2px;
   cursor: pointer;
   margin-top: 35px;
+}
+
+.popup__save:hover {
+  opacity: 0.6;
 }
 
 .popup__addpic {
@@ -135,6 +141,7 @@
   flex-direction: column;
   width: 358px;
 }
+
 .popup__avatar-form {
   display: flex;
   flex-direction: column;
@@ -150,12 +157,13 @@
   box-sizing: border-box;
   position: relative;
 }
+
 .popup__caption {
   height: 12px;
   font-weight: 400;
   font-size: 12px;
   line-height: 100%;
-  color: #fff;
+  color: #ffffff;
   margin: 10px auto 0;
 }
 
@@ -189,25 +197,30 @@
     height: 322px;
     padding: 25px 22px 22px;
   }
+
   .popup__close {
     width: 30px;
     height: 30px;
     top: -73px;
     right: -18px;
   }
+
   .popup__text {
     width: 238px;
     font-size: 18px;
   }
+
   .popup__name {
     width: 238px;
     font-size: 14px;
   }
+
   .popup__about {
     width: 238px;
     font-size: 14px;
     margin: 20px 0 0;
   }
+
   .popup__save {
     width: 238px;
     height: 46px;
@@ -218,6 +231,7 @@
   .popup__error {
     width: 220px;
   }
+
   .popup__confirm {
     height: 0;
   }
@@ -225,6 +239,7 @@
   .popup__text-confirm {
     margin-bottom: 38px;
   }
+
   .popup__save-confirm {
     max-width: 282px;
     width: 100%;
