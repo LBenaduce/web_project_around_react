@@ -5,10 +5,6 @@ import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
 import Footer from "./components/Footer/Footer";
 
-import Popup from "./components/Popup/Popup";
-import EditProfile from "./components/EditProfile/EditProfile";
-import EditAvatar from "./components/EditAvatar/EditAvatar";
-import NewCard from "./components/NewCard/NewCard";
 
 import api from "./utils/api";
 import CurrentUserContext from "./contexts/CurrentUserContext";
@@ -92,20 +88,14 @@ useEffect(() => {
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
           onOpenPopup={handleOpenPopup}
+        
+          popup={popup}
+          onClosePopup={handleClosePopup}
+          onUpdateUser={handleUpdateUser}
+          onUpdateAvatar={handleUpdateAvatar}
+          onAddPlaceSubmit={handleAddPlaceSubmit}
         />
         <Footer />
-
-        <Popup isOpen={popup === "edit-profile"} onClose={handleClosePopup}>
-          <EditProfile />
-        </Popup>
-
-        <Popup isOpen={popup === "edit-avatar"} onClose={handleClosePopup}>
-          <EditAvatar />
-        </Popup>
-
-        <Popup isOpen={popup === "new-card"} onClose={handleClosePopup}>
-          <NewCard onAddPlaceSubmit={handleAddPlaceSubmit} />
-        </Popup>
       </div>
     </CurrentUserContext.Provider>
   );

@@ -1,5 +1,9 @@
 import { useContext } from "react";
 import Card from "../Card/Card";
+import Popup from "../Popup/Popup";
+import EditProfile from "../EditProfile/EditProfile";
+import EditAvatar from "../EditAvatar/EditAvatar";
+import NewCard from "../NewCard/NewCard";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function Main({
@@ -7,7 +11,12 @@ export default function Main({
   onCardLike,
   onCardDelete,
   onCardClick,
-  onOpenPopup,
+  onOpenPopup,,
+  popup,
+  onClosePopup,
+  onUpdateUser,
+  onUpdateAvatar,
+  onAddPlaceSubmit,
 }) {
   const { currentUser } = useContext(CurrentUserContext);
 
@@ -60,6 +69,17 @@ export default function Main({
           ))}
         </ul>
       </section>
+      <Popup isOpen={popup === "edit-profile"} onClose={onClosePopup}>
+        <EditProfile onUpdateUser={onUpdateUser} />
+      </Popup>
+
+      <Popup isOpen={popup === "edit-avatar"} onClose={onClosePopup}>
+        <EditAvatar onUpdateAvatar={onUpdateAvatar} />
+      </Popup>
+
+      <Popup isOpen={popup === "new-card"} onClose={onClosePopup}>
+        <NewCard onAddPlaceSubmit={onAddPlaceSubmit} />
+      </Popup>
     </main>
   );
 }
