@@ -1,13 +1,17 @@
 import { useEffect, useState } from "react";
-import Header from "../Header/Header";
-import Main from "../Main/Main";
-import Footer from "../Footer/Footer";
-import Popup from "../Popup/Popup";
-import EditProfile from "../EditProfile/EditProfile";
-import EditAvatar from "../EditAvatar/EditAvatar";
-import NewCard from "../NewCard/NewCard";
-import api from "../../utils/api";
-import CurrentUserContext from "../../contexts/CurrentUserContext";
+
+import Header from "./components/Header/Header";
+import Main from "./components/Main/Main";
+import Footer from "./components/Footer/Footer";
+
+import Popup from "./components/Popup/Popup";
+import EditProfile from "./components/EditProfile/EditProfile";
+import EditAvatar from "./components/EditAvatar/EditAvatar";
+import NewCard from "./components/NewCard/NewCard";
+
+import api from "./utils/api";
+import CurrentUserContext from "./contexts/CurrentUserContext";
+
 
 export default function App() {
   const [popup, setPopup] = useState(null);
