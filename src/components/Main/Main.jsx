@@ -5,6 +5,7 @@ import EditProfile from "../EditProfile/EditProfile";
 import EditAvatar from "../EditAvatar/EditAvatar";
 import NewCard from "../NewCard/NewCard";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
+import "./Main.css";
 
 export default function Main({
   cards,
