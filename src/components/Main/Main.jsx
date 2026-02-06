@@ -11,7 +11,7 @@ export default function Main({
   onCardLike,
   onCardDelete,
   onCardClick,
-  onOpenPopup,,
+  onOpenPopup,
   popup,
   onClosePopup,
   onUpdateUser,
