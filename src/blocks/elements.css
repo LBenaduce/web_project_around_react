@@ -1,106 +1,85 @@
 .elements {
-  max-width: 880px;
-  width: 100%;
   margin: 0 auto;
+  padding: 0;
+  max-width: 880px;
 }
 
 .elements__list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-}
-
-.elements__image {
-  height: 282px;
-  width: 100%;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  object-fit: cover;
+  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
+  gap: 20px 17px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 .elements__card {
-  max-width: 282px;
-  height: 361px;
+  background-color: #ffffff;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 1);
-  box-shadow: 0px 0px 25px 0px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  max-width: 282px;
+  width: 100%;
   position: relative;
+}
+
+.elements__image {
+  width: 100%;
+  height: 282px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.elements__remove {
+  position: absolute;
+  top: 18px;
+  right: 15px;
+  width: 18px;
+  height: 19px;
+  border: none;
+  background: transparent url("../images/Trash.svg") center no-repeat;
+  cursor: pointer;
 }
 
 .elements__caption {
   display: flex;
   justify-content: space-between;
-  text-align: center;
-  margin: 25px 15px 31px 21px;
+  align-items: center;
+  padding: 22px 20px 26px;
 }
 
 .elements__text {
-  min-height: 27px;
-  max-width: 223px;
-  font-weight: 900;
-  font-size: 24px;
-  line-height: 100%;
   margin: 0;
-  text-overflow: ellipsis;
+  font-size: 24px;
+  line-height: 29px;
+  font-weight: 900;
+  color: #000000;
+  max-width: 190px;
   white-space: nowrap;
   overflow: hidden;
-}
-
-.elements__like:hover {
-  opacity: 0.6;
+  text-overflow: ellipsis;
 }
 
 .elements__like {
-  width: 21px;
+  width: 22px;
   height: 19px;
   border: none;
-  background-color: transparent;
-  padding: 0;
+  background: transparent url("../images/Like.svg") center no-repeat;
   cursor: pointer;
-  background: url(../images/like.svg) center no-repeat;
 }
 
-.elements__like.elements__like-on {
-  width: 21px;
-  height: 19px;
-  border: none;
-  background-color: transparent;
-  padding: 0;
-  cursor: pointer;
-  background: url(../images/liked.svg) center no-repeat;
-
+.elements__like-on {
+  background-image: url("../images/Like_active.svg");
 }
 
-.elements__remove {
-  background: url(../images/trash.svg) center no-repeat;
-  border: none;
-  background-color: transparent;
-  padding: 0;
-  cursor: pointer;
-  width: 18px;
-  height: 19px;
-  position: absolute;
-  top: 18px;
-  right: 15px;
-}
-
-.elements__remove:hover {
-  opacity: 0.6;
-}
-
-@media screen and (max-width: 934px) {
-  .elements__list {
-    grid-template-columns: repeat(2, 282px);
-    justify-content: center;
+@media screen and (max-width: 768px) {
+  .elements {
+    max-width: 580px;
   }
 }
 
-@media screen and (max-width: 632px) {
-  .elements__list {
-    grid-template-columns: repeat(1, 282px);
-    justify-content: center;
+@media screen and (max-width: 480px) {
+  .elements {
+    max-width: 282px;
   }
 }

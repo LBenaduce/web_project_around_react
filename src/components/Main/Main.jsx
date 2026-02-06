@@ -6,6 +6,7 @@ export default function Main({
   cards,
   onCardLike,
   onCardDelete,
+  onCardClick,
   onOpenPopup,
 }) {
   const { currentUser } = useContext(CurrentUserContext);
@@ -13,30 +14,36 @@ export default function Main({
   return (
     <main className="content">
       <section className="profile">
-        <div className="profile__image-container">
+        <div
+          className="profile__avatar-container"
+          onClick={() => onOpenPopup?.("edit-avatar")}
+          role="button"
+          tabIndex={0}
+        >
           <img
-            className="profile__image"
+            className="profile__avatar"
             src={currentUser.avatar}
-            alt="Avatar"
+            alt="Avatar do perfil"
           />
-          <button
-            className="profile__image-edit-button"
-            onClick={() => onOpenPopup("edit-avatar")}
-          />
+          <div className="profile__avatar-overlay" />
         </div>
 
-        <div className="profile__info">
-          <h1 className="profile__title">{currentUser.name}</h1>
-          <p className="profile__description">{currentUser.about}</p>
+        <div className="profile__text">
+          <h1 className="profile__name">{currentUser.name}</h1>
           <button
-            className="profile__edit-button"
-            onClick={() => onOpenPopup("edit-profile")}
+            type="button"
+            className="profile__pen"
+            aria-label="Editar perfil"
+            onClick={() => onOpenPopup?.("edit-profile")}
           />
+          <p className="profile__description">{currentUser.about}</p>
         </div>
 
         <button
-          className="profile__add-button"
-          onClick={() => onOpenPopup("new-card")}
+          type="button"
+          className="profile__plus"
+          aria-label="Adicionar novo card"
+          onClick={() => onOpenPopup?.("new-card")}
         />
       </section>
 
@@ -48,6 +55,7 @@ export default function Main({
               card={card}
               onCardLike={onCardLike}
               onCardDelete={onCardDelete}
+              onCardClick={onCardClick}
             />
           ))}
         </ul>

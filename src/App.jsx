@@ -1,3 +1,4 @@
+import "./App.css";
 import { useEffect, useState } from "react";
 
 import Header from "./components/Header/Header";
@@ -26,19 +27,29 @@ export default function App() {
     setPopup(null);
   }
 
-  useEffect(() => {
-    api.getUserInfo().then(setCurrentUser);
-    api.getCardList().then(setCards);
-  }, []);
+useEffect(() => {
+  Promise.all([api.getUserInfo(), api.getCardList()])
+    .then(([userData, cardsData]) => {
+      console.log("USER:", userData);
+      console.log("CARDS:", cardsData);
+
+      setCurrentUser(userData);
+      setCards(Array.isArray(cardsData) ? cardsData : []);
+    })
+    .catch((err) => console.error("API ERROR:", err));
+}, []);
+
 
   function handleCardLike(card) {
+    const isLiked = card.likes?.some((u) => u._id === currentUser?._id);
     api
-      .changeLikeCardStatus(card._id, !card.isLiked)
+      .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) =>
         setCards((state) =>
           state.map((c) => (c._id === card._id ? newCard : c))
         )
-      );
+      )
+      .catch((err) => console.error("LIKE ERROR:", err));
   }
 
   function handleCardDelete(card) {
