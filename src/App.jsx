@@ -1,119 +1,97 @@
-import { useState } from "react";
-import "./App.css";
-
-import Header from "./components/Header/Header";
-import Main from "./components/Main/Main";
-import Footer from "./components/Footer/Footer";
-import Popup from "./components/Popup/Popup";
-import EditProfile from "./components/EditProfile/EditProfile";
-import EditAvatar from "./components/EditAvatar/EditAvatar";
-import NewCard from "./components/NewCard/NewCard";
+import { useEffect, useState } from "react";
+import Header from "../Header/Header";
+import Main from "../Main/Main";
+import Footer from "../Footer/Footer";
+import Popup from "../Popup/Popup";
+import EditProfile from "../EditProfile/EditProfile";
+import EditAvatar from "../EditAvatar/EditAvatar";
+import NewCard from "../NewCard/NewCard";
+import api from "../../utils/api";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function App() {
   const [popup, setPopup] = useState(null);
-  const [selectedCard, setSelectedCard] = useState(null);
+  const [currentUser, setCurrentUser] = useState({});
+  const [cards, setCards] = useState([]);
 
-  const [cards, setCards] = useState([
-    {
-      _id: "1",
-      name: "Yosemite Valley",
-      link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg",
-      isLiked: false,
-    },
-    {
-      _id: "2",
-      name: "Lake Louise",
-      link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lake-louise.jpg",
-      isLiked: false,
-    },
-  ]);
+  function handleOpenPopup(name) {
+    setPopup(name);
+  }
 
-  function closeAllPopups() {
+  function handleClosePopup() {
     setPopup(null);
-    setSelectedCard(null);
   }
 
-  function handleEditProfileClick() {
-    setPopup("edit-profile");
-  }
-
-  function handleAddPlaceClick() {
-    setPopup("new-card");
-  }
-
-  function handleEditAvatarClick() {
-    setPopup("edit-avatar");
-  }
-
-  function handleCardClick(card) {
-    setSelectedCard(card);
-    setPopup("image");
-  }
+  useEffect(() => {
+    api.getUserInfo().then(setCurrentUser);
+    api.getCardList().then(setCards);
+  }, []);
 
   function handleCardLike(card) {
-    setCards((prev) =>
-      prev.map((c) =>
-        c._id === card._id ? { ...c, isLiked: !c.isLiked } : c
-      )
-    );
+    api
+      .changeLikeCardStatus(card._id, !card.isLiked)
+      .then((newCard) =>
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        )
+      );
   }
 
   function handleCardDelete(card) {
-    setCards((prev) => prev.filter((c) => c._id !== card._id));
+    api
+      .deleteCard(card._id)
+      .then(() =>
+        setCards((state) => state.filter((c) => c._id !== card._id))
+      );
+  }
+
+  function handleUpdateUser(data) {
+    api.setUserInfo(data).then((newData) => {
+      setCurrentUser(newData);
+      handleClosePopup();
+    });
+  }
+
+  function handleUpdateAvatar(data) {
+    api.setUserAvatar(data).then((newData) => {
+      setCurrentUser(newData);
+      handleClosePopup();
+    });
+  }
+
+  function handleAddPlaceSubmit(data) {
+    api.addCard(data).then((newCard) => {
+      setCards((state) => [newCard, ...state]);
+      handleClosePopup();
+    });
   }
 
   return (
-    <div className="page">
-      <Header />
+    <CurrentUserContext.Provider
+      value={{ currentUser, handleUpdateUser, handleUpdateAvatar }}
+    >
+      <div className="page">
+        <Header />
+        <Main
+          cards={cards}
+          onCardLike={handleCardLike}
+          onCardDelete={handleCardDelete}
+          onOpenPopup={handleOpenPopup}
+        />
+        <Footer />
 
-      <Main
-        cards={cards}
-        onEditProfile={handleEditProfileClick}
-        onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-        onCardClick={handleCardClick}
-        onCardLike={handleCardLike}
-        onCardDelete={handleCardDelete}
-      />
+        <Popup isOpen={popup === "edit-profile"} onClose={handleClosePopup}>
+          <EditProfile />
+        </Popup>
 
-      <Footer />
+        <Popup isOpen={popup === "edit-avatar"} onClose={handleClosePopup}>
+          <EditAvatar />
+        </Popup>
 
-      <Popup
-        isOpen={popup === "edit-profile"}
-        title="Edit profile"
-        onClose={closeAllPopups}
-      >
-        <EditProfile />
-      </Popup>
-
-      <Popup
-        isOpen={popup === "new-card"}
-        title="New place"
-        onClose={closeAllPopups}
-      >
-        <NewCard />
-      </Popup>
-
-      <Popup
-        isOpen={popup === "edit-avatar"}
-        title="Change profile picture"
-        onClose={closeAllPopups}
-      >
-        <EditAvatar />
-      </Popup>
-
-      <Popup isOpen={popup === "image"} onClose={closeAllPopups} isImage>
-        {selectedCard ? (
-          <figure>
-            <img
-              className="popup__zoom"
-              src={selectedCard.link}
-              alt={selectedCard.name}
-            />
-            <figcaption className="popup__caption">{selectedCard.name}</figcaption>
-          </figure>
-        ) : null}
-      </Popup>
-    </div>
+        <Popup isOpen={popup === "new-card"} onClose={handleClosePopup}>
+          <NewCard onAddPlaceSubmit={handleAddPlaceSubmit} />
+        </Popup>
+      </div>
+    </CurrentUserContext.Provider>
   );
 }

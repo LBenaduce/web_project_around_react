@@ -1,30 +1,33 @@
-export default function NewCard() {
+import { useState } from "react";
+
+export default function NewCard({ onAddPlaceSubmit }) {
+  const [name, setName] = useState("");
+  const [link, setLink] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    onAddPlaceSubmit({ name, link });
+  }
+
   return (
-    <form className="popup__profile" name="new-card" noValidate>
+    <form className="popup__form" onSubmit={handleSubmit} noValidate>
       <input
-        type="text"
-        className="popup__name"
-        name="name"
-        id="place-name"
-        placeholder="Title"
-        minLength="1"
+        className="popup__input"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        minLength="2"
         maxLength="30"
         required
       />
-      <span className="popup__error" id="place-name-error" />
-
       <input
+        className="popup__input"
+        value={link}
+        onChange={(e) => setLink(e.target.value)}
         type="url"
-        className="popup__avatar"
-        name="link"
-        id="place-link"
-        placeholder="Image link"
         required
       />
-      <span className="popup__error" id="place-link-error" />
-
-      <button type="submit" className="popup__save">
-        Create
+      <button className="popup__button" type="submit">
+        Criar
       </button>
     </form>
   );

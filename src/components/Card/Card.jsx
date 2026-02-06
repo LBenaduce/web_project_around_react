@@ -1,34 +1,38 @@
-import "./Card.css";
+import { useContext } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function Card({ card, onCardClick, onCardLike, onCardDelete }) {
-  const { name, link, isLiked } = card;
+export default function Card({ card, onCardLike, onCardDelete }) {
+  const { currentUser } = useContext(CurrentUserContext);
+
+  const isOwn = card.owner === currentUser._id;
+  const isLiked = card.isLiked;
+
+  const cardLikeButtonClassName = `card__like-button ${
+    isLiked ? "card__like-button_is-active" : ""
+  }`;
 
   return (
     <li className="card">
-      <img
-        className="card__image"
-        src={link}
-        alt={name}
-        onClick={() => onCardClick(card)}
-      />
+      <img className="card__image" src={card.link} alt={card.name} />
 
-      <button
-        className="card__delete-button"
-        type="button"
-        aria-label="Excluir"
-        onClick={() => onCardDelete(card)}
-      />
+      {isOwn && (
+        <button
+          className="card__delete-button"
+          onClick={() => onCardDelete(card)}
+        />
+      )}
 
       <div className="card__description">
-        <h2 className="card__title">{name}</h2>
-        <button
-          className={`card__like-button ${
-            isLiked ? "card__like-button_active" : ""
-          }`}
-          type="button"
-          aria-label="Curtir"
-          onClick={() => onCardLike(card)}
-        />
+        <h2 className="card__title">{card.name}</h2>
+        <div className="card__like-container">
+          <button
+            className={cardLikeButtonClassName}
+            onClick={() => onCardLike(card)}
+          />
+          <span className="card__like-count">
+            {card.likes?.length || 0}
+          </span>
+        </div>
       </div>
     </li>
   );

@@ -1,41 +1,44 @@
-import "./Profile.css";
-import avatar from "../../images/avatar.png";
+import { useContext, useEffect, useState } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function Profile({ onEditProfile, onAddPlace, onEditAvatar }) {
+export default function EditProfile() {
+  const { currentUser, handleUpdateUser } =
+    useContext(CurrentUserContext);
+
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+
+  useEffect(() => {
+    setName(currentUser.name || "");
+    setDescription(currentUser.about || "");
+  }, [currentUser]);
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    handleUpdateUser({ name, about: description });
+  }
+
   return (
-    <section className="profile">
-      <button
-        type="button"
-        className="profile__avatar-container"
-        onClick={onEditAvatar}
-        aria-label="Edit avatar"
-      >
-        <img
-          className="profile__avatar"
-          src={avatar}
-          alt="Profile avatar"
-        />
-      </button>
-
-      <div className="profile__info">
-        <div className="profile__title-row">
-          <h1 className="profile__title">Jacques Cousteau</h1>
-          <button
-            type="button"
-            className="profile__edit-button"
-            onClick={onEditProfile}
-            aria-label="Edit profile"
-          />
-        </div>
-        <p className="profile__description">Explorer</p>
-      </div>
-
-      <button
-        type="button"
-        className="profile__add-button"
-        onClick={onAddPlace}
-        aria-label="Add place"
+    <form className="popup__form" onSubmit={handleSubmit} noValidate>
+      <input
+        className="popup__input"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        minLength="2"
+        maxLength="40"
+        required
       />
-    </section>
+      <input
+        className="popup__input"
+        value={description}
+        onChange={(e) => setDescription(e.target.value)}
+        minLength="2"
+        maxLength="200"
+        required
+      />
+      <button className="popup__button" type="submit">
+        Salvar
+      </button>
+    </form>
   );
 }
