@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-import Header from "./header/Header";
-import Main from "./main/Main";
-import Footer from "./footer/Footer";
+import Header from "./Header/Header";
+import Main from "./Main/Main";
+import Footer from "./Footer/Footer";
 
-import Popup from "./popup/Popup";
-import EditProfile from "./editProfile/EditProfile";
-import EditAvatar from "./editAvatar/EditAvatar";
-import NewCard from "./newCard/NewCard";
+import Popup from "./Popup/Popup";
+import EditProfile from "./EditProfile/EditProfile";
+import EditAvatar from "./EditAvatar/EditAvatar";
+import NewCard from "./NewCard/NewCard";
 import ImagePopup from "./imagePopup/ImagePopup";
 import RemoveCard from "./removeCard/RemoveCard";
 
