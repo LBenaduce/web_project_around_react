@@ -1,86 +1,147 @@
-import { useContext } from "react";
-import Card from "../Card/Card";
-import Popup from "../Popup/Popup";
-import EditProfile from "../EditProfile/EditProfile";
-import EditAvatar from "../EditAvatar/EditAvatar";
-import NewCard from "../NewCard/NewCard";
+import pencil from "../../assets/images/pencil.svg";
+import plusSign from "../../assets/images/plussign.svg";
+import NewCard from "./components/Popup/components/NewCard/NewCard";
+import EditProfile from "./components/Popup/components/EditProfile/EditProfile";
+import EditAvatar from "./components/Popup/components/EditAvatar/EditAvatar";
+import Popup from "./components/Popup/Popup";
+import Card from "./components/Card/Card";
+import ImagePopup from "./components/Card/ImagePopup/ImagePopup";
+import PopupConfirmation from "./components/Popup/components/popupConfirmation/PopupConfirmation";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
-import "./Main.css";
+import { useContext, useEffect, useState } from "react";
 
 export default function Main({
-  cards,
-  onCardLike,
-  onCardDelete,
-  onCardClick,
+  onOpenPopupConfirmation,
+  onOpenPopupImage,
   onOpenPopup,
-  popup,
   onClosePopup,
-  onUpdateUser,
-  onUpdateAvatar,
-  onAddPlaceSubmit,
+  popup,
+  popupImage,
+  popupConfirmation,
+  cards,
+  onCardDelete,
+  onCardLike,
 }) {
   const { currentUser } = useContext(CurrentUserContext);
+  const [pencilState, setPencilState] = useState(false);
+
+  const newCardPopup = { title: "New card", children: <NewCard /> };
+  const editProfilePopup = { title: "Edit Profile", children: <EditProfile /> };
+  const editAvatarPopup = { title: "Change Image", children: <EditAvatar /> };
+  const editPopupConfirmation = {
+    title: "Confirmar?",
+    children: <PopupConfirmation />,
+  };
+
+  function handleCardClick(card) {
+    const imagePopup = {
+      children: <ImagePopup card={card} onClose={onClosePopup} />,
+    };
+    onOpenPopupImage(imagePopup);
+  }
+
+  function handlePencilState(value) {
+    setPencilState(value);
+  }
+
+  useEffect(() => {
+    function handleEscKey(event) {
+      if (popup || popupImage || popupConfirmation) {
+        if (event.key === "Escape") {
+          onClosePopup();
+        }
+      }
+    }
+
+    document.addEventListener("keydown", handleEscKey);
+    return () => {
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, [popup, popupImage, popupConfirmation, onClosePopup]);
 
   return (
-    <main className="content">
+    <main className="main">
       <section className="profile">
         <div
-          className="profile__avatar-container"
-          onClick={() => onOpenPopup?.("edit-avatar")}
-          role="button"
-          tabIndex={0}
+          onClick={() => {
+            onOpenPopup(editAvatarPopup);
+          }}
+          className="profile-container"
+          onMouseEnter={() => handlePencilState(true)}
+          onMouseLeave={() => handlePencilState(false)}
         >
           <img
-            className="profile__avatar"
             src={currentUser.avatar}
-            alt="Avatar do perfil"
+            alt={currentUser.name}
+            className={
+              "profile__image" + (pencilState ? " profile__image-opacity" : "")
+            }
           />
-          <div className="profile__avatar-overlay" />
-        </div>
-
-        <div className="profile__text">
-          <h1 className="profile__name">{currentUser.name}</h1>
-          <button
-            type="button"
-            className="profile__pen"
-            aria-label="Editar perfil"
-            onClick={() => onOpenPopup?.("edit-profile")}
+          <img
+            src={pencil}
+            alt="icone de edição"
+            className={
+              pencilState
+                ? "image-profile-pincel-active"
+                : "image-profile-pincel"
+            }
           />
-          <p className="profile__description">{currentUser.about}</p>
         </div>
-
-        <button
-          type="button"
-          className="profile__plus"
-          aria-label="Adicionar novo card"
-          onClick={() => onOpenPopup?.("new-card")}
-        />
+        <div className="profile__feat">
+          <h1 className="profile__title">{currentUser.name}</h1>
+          <div
+            className="profile__border-pincel"
+            onClick={() => onOpenPopup(editProfilePopup)}
+          >
+            <img
+              src={pencil}
+              alt="icone de um pincel"
+              className="profile__pincel"
+            />
+          </div>
+          <p className="profile__text">{currentUser.about}</p>
+        </div>
+        <div
+          className="profile__border-plus"
+          onClick={() => onOpenPopup(newCardPopup)}
+        >
+          <img src={plusSign} alt="icone de adição" className="profile__plus" />
+        </div>
       </section>
-
-      <section className="cards">
-        <ul className="cards__list">
-          {cards.map((card) => (
+      <ul className="photos">
+        {cards &&
+          cards.map((card) => (
             <Card
               key={card._id}
               card={card}
+              onCardClick={handleCardClick}
               onCardLike={onCardLike}
+              onOpenPopupConfirmation={onOpenPopupConfirmation}
               onCardDelete={onCardDelete}
-              onCardClick={onCardClick}
             />
           ))}
-        </ul>
-      </section>
-      <Popup isOpen={popup === "edit-profile"} onClose={onClosePopup}>
-        <EditProfile onUpdateUser={onUpdateUser} />
-      </Popup>
-
-      <Popup isOpen={popup === "edit-avatar"} onClose={onClosePopup}>
-        <EditAvatar onUpdateAvatar={onUpdateAvatar} />
-      </Popup>
-
-      <Popup isOpen={popup === "new-card"} onClose={onClosePopup}>
-        <NewCard onAddPlaceSubmit={onAddPlaceSubmit} />
-      </Popup>
+        ;
+      </ul>
+      {popup && (
+        <Popup onClose={onClosePopup} title={popup.title}>
+          {popup.children}
+        </Popup>
+      )}
+      {popupImage && <div>{popupImage.children}</div>}
+      {popupConfirmation && (
+        <Popup onClose={onClosePopup} title={editPopupConfirmation.title}>
+          {editPopupConfirmation.children}
+        </Popup>
+      )}
     </main>
   );
 }
+
+Main;
+
+// solved
+// * Adicionar validação de formulário
+// * Adicionar feat closepopup quando clicado "ESC" e fora do popup
+// * Adicionar popup de confirmação ao excluir cartão
+// * As fontes não estao sendo carregadas
+// * mostrar icone do lápis quando mouse em cima da foto de perfil
