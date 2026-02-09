@@ -1,105 +1,69 @@
 class Api {
-  constructor(baseUrl, headers) {
+  constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
 
-  getInfoUser() {
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: {
-        authorization: this._headers,
-      },
-    });
+  _handleResponse(res) {
+    if (res.ok) return res.json();
+    return res.text().then((text) => Promise.reject(text));
+  }
+
+  _request(path, options = {}) {
+    return fetch(`${this._baseUrl}${path}`, {
+      headers: this._headers,
+      ...options,
+    }).then(this._handleResponse);
+  }
+
+  getUserInfo() {
+    return this._request("/users/me");
   }
 
   setUserInfo({ name, about }) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return this._request("/users/me", {
       method: "PATCH",
-      headers: {
-        authorization: this._headers,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name,
-        about,
-      }),
+      body: JSON.stringify({ name, about }),
     });
   }
 
-  getInitialCards() {
-    return fetch(`${this._baseUrl}/cards`, {
-      headers: {
-        authorization: this._headers,
-      },
+  setUserAvatar({ avatar }) {
+    return this._request("/users/me/avatar", {
+      method: "PATCH",
+      body: JSON.stringify({ avatar }),
     });
   }
 
-  createCard(newCard) {
-    return fetch(`${this._baseUrl}/cards`, {
+  getCardList() {
+    return this._request("/cards");
+  }
+
+  addCard({ name, link }) {
+    return this._request("/cards", {
       method: "POST",
-      headers: {
-        authorization: this._headers,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newCard),
+      body: JSON.stringify({ name, link }),
     });
-  }
-
-  updateLike(cardId) {
-    return fetch(
-      `https://around-api.pt-br.tripleten-services.com/v1/cards/${cardId}/likes`,
-      {
-        method: "PUT",
-        headers: {
-          authorization: this._headers,
-        },
-      }
-    );
-  }
-  removeLike(cardId) {
-    return fetch(
-      `https://around-api.pt-br.tripleten-services.com/v1/cards/${cardId}/likes`,
-      {
-        method: "DELETE",
-        headers: {
-          authorization: this._headers,
-        },
-      }
-    );
   }
 
   deleteCard(cardId) {
-    return fetch(
-      `https://around-api.pt-br.tripleten-services.com/v1/cards/${cardId}`,
-      {
-        method: "DELETE",
-        headers: {
-          authorization: this._headers,
-        },
-      }
-    );
+    return this._request(`/cards/${cardId}`, {
+      method: "DELETE",
+    });
   }
 
-  changeProfileImage({ avatar }) {
-    return fetch(
-      "https://around-api.pt-br.tripleten-services.com/v1/users/me/avatar",
-      {
-        method: "PATCH",
-        headers: {
-          authorization: this._headers,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          avatar,
-        }),
-      }
-    );
-  }
+  changeLikeCardStatus(cardId, shouldLike) {
+  return this._request(`/cards/${cardId}/likes`, {
+    method: shouldLike ? "PUT" : "DELETE",
+  });
+}
 }
 
-const api = new Api(
-  "https://around-api.pt-br.tripleten-services.com/v1",
-  "a016777f-b4ef-40ad-b50c-29e69831ab99"
-);
+const api = new Api({
+  baseUrl: "https://around-api.pt-br.tripleten-services.com/v1",
+  headers: {
+    authorization: "6f52aaa4-1ad3-40e3-9da3-068576075181",
+    "Content-Type": "application/json",
+  },
+});
 
 export default api;

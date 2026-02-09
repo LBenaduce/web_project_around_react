@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import CurrentUserContext from "../../../../../../contexts/CurrentUserContext";
+import CurrentUserContext from "/Users/luizbenadue/dev/web_project_around_react/src/contexts/CurrentUserContext.js";
 
 export default function PopupConfirmation() {
   const userContext = useContext(CurrentUserContext);
@@ -13,7 +13,7 @@ export default function PopupConfirmation() {
   return (
     <form
       onSubmit={handleSubmit}
-      id="confirmation-form"
+      id="confirm ation-form"
       className="popup__forms popup__forms-confirmation"
       noValidate
     >

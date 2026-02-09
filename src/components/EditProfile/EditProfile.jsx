@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 
-export default function EditProfile({ onUpdateUser }) {
+export default function EditProfile({ onUpdateUser, submitText }) {
   const { currentUser } = useContext(CurrentUserContext);
 
   const [name, setName] = useState("");
@@ -18,39 +18,31 @@ export default function EditProfile({ onUpdateUser }) {
   }
 
   return (
-    <form className="popup__form" name="profile-form" onSubmit={handleSubmit} noValidate>
-      <label className="popup__label">
-        <input
-          className="popup__input popup__input_type_name"
-          minLength="2"
-          maxLength="40"
-          name="name"
-          placeholder="Name"
-          required
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <span className="popup__error" />
-      </label>
+    <form className="popup__form" onSubmit={handleSubmit} noValidate>
+      <input
+        className="popup__input"
+        name="name"
+        minLength="2"
+        maxLength="40"
+        required
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+      />
+      <span className="popup__error" />
 
-      <label className="popup__label">
-        <input
-          className="popup__input popup__input_type_description"
-          minLength="2"
-          maxLength="200"
-          name="about"
-          placeholder="About me"
-          required
-          type="text"
-          value={about}
-          onChange={(e) => setAbout(e.target.value)}
-        />
-        <span className="popup__error" />
-      </label>
+      <input
+        className="popup__input"
+        name="about"
+        minLength="2"
+        maxLength="200"
+        required
+        value={about}
+        onChange={(e) => setAbout(e.target.value)}
+      />
+      <span className="popup__error" />
 
-      <button className="button popup__button" type="submit">
-        Save
+      <button className="popup__save" type="submit">
+        {submitText}
       </button>
     </form>
   );

@@ -1,7 +1,15 @@
-import { useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
+import CurrentUserContext from "../../contexts/CurrentUserContext";
 
 export default function EditAvatar({ onUpdateAvatar }) {
+  const { currentUser } = useContext(CurrentUserContext);
   const avatarRef = useRef(null);
+
+  useEffect(() => {
+    if (avatarRef.current) {
+      avatarRef.current.value = "";
+    }
+  }, [currentUser]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -9,21 +17,24 @@ export default function EditAvatar({ onUpdateAvatar }) {
   }
 
   return (
-    <form className="popup__form" name="avatar-form" onSubmit={handleSubmit} noValidate>
-      <label className="popup__label">
-        <input
-          className="popup__input popup__input_type_avatar"
-          name="avatar"
-          placeholder="Avatar link"
-          required
-          type="url"
-          ref={avatarRef}
-        />
-        <span className="popup__error" />
-      </label>
+    <form
+      className="popup__form"
+      name="avatar-form"
+      noValidate
+      onSubmit={handleSubmit}
+    >
+      <input
+        ref={avatarRef}
+        className="popup__input"
+        type="url"
+        name="avatar"
+        placeholder="Link da imagem"
+        required
+      />
+      <span className="popup__error" />
 
-      <button className="button popup__button" type="submit">
-        Save
+      <button className="popup__save" type="submit">
+        Salvar
       </button>
     </form>
   );
