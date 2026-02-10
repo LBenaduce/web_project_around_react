@@ -10,6 +10,7 @@ import CurrentUserContext from "./contexts/CurrentUserContext";
 
 export default function App() {
   const [popup, setPopup] = useState(null);
+  const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState({
     name: "",
     about: "",
@@ -24,6 +25,12 @@ export default function App() {
 
   function handleClosePopup() {
     setPopup(null);
+    setSelectedCard(null);
+  }
+
+  function handleCardClick(card) {
+    setSelectedCard(card);
+    setPopup("image");
   }
 
   useEffect(() => {
@@ -40,17 +47,17 @@ export default function App() {
     const userId = currentUser?._id;
     if (!userId) return;
 
-    const isLiked = card?.isLiked || 
-      (Array.isArray(card?.likes) && card.likes.some((like) =>
+    const likes = Array.isArray(card?.likes) ? card.likes : [];
+    const isLiked =
+      card?.isLiked ||
+      likes.some((like) =>
         typeof like === "string" ? like === userId : like?._id === userId
-      ));
-
-    console.log("Vai", isLiked ? "DESCURTIR" : "CURTIR", card._id);
+      );
 
     api
       .changeLikeCardStatus(card._id, !isLiked)
       .then((res) => {
-        const updatedCard = res.card ?? res;
+        const updatedCard = res?.card ?? res;
         setCards((state) =>
           state.map((c) => (c._id === updatedCard._id ? updatedCard : c))
         );
@@ -109,6 +116,8 @@ export default function App() {
           cards={cards}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
+          onCardClick={handleCardClick}
+          selectedCard={selectedCard}
           onOpenPopup={handleOpenPopup}
           popup={popup}
           onClosePopup={handleClosePopup}

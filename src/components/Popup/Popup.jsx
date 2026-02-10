@@ -7,6 +7,8 @@ export default function Popup({
   title,
   submitText = "Salvar",
   children,
+  containerClassName = "",
+  closeButtonClassName = "popup__close",
 }) {
   if (!isOpen) {
     return null;
@@ -24,12 +26,16 @@ export default function Popup({
     ? cloneElement(children, { submitText })
     : children;
 
+  const containerClasses = ["popup__conteiner", containerClassName]
+    .filter(Boolean)
+    .join(" ");
+
   return (
     <div className="popup" onClick={handleOverlayClick}>
-      <div className="popup__conteiner" onClick={handleContentClick}>
+      <div className={containerClasses} onClick={handleContentClick}>
         <button
           type="button"
-          className="popup__close"
+          className={closeButtonClassName}
           aria-label="Fechar"
           onClick={onClose}
         />

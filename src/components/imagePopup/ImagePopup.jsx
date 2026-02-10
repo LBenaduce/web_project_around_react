@@ -1,18 +1,22 @@
+import Popup from "../Popup/Popup";
 import "./imagePopup.css";
 
 export default function ImagePopup({ card, isOpen, onClose }) {
   return (
-    <section className={`popup ${isOpen ? "" : "popup-hidden"}`}>
-      <div className="popup__conteiner-zoom">
-        <button
-          type="button"
-          className="popup__close-zoom"
-          onClick={onClose}
-          aria-label="Close popup"
+    <Popup
+      isOpen={isOpen}
+      onClose={onClose}
+      containerClassName="popup__conteiner_type_image"
+      closeButtonClassName="popup__close-zoom"
+    >
+      <figure className="popup__figure">
+        <img
+          className="popup__image"
+          src={card?.link}
+          alt={card?.name || "Imagem ampliada"}
         />
-        {card && <img className="popup__zoom" src={card.link} alt={card.name} />}
-        {card && <p className="popup__caption">{card.name}</p>}
-      </div>
-    </section>
+        <figcaption className="popup__caption">{card?.name}</figcaption>
+      </figure>
+    </Popup>
   );
 }

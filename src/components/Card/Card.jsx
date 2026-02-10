@@ -14,12 +14,17 @@ export default function Card({ card, onCardLike, onCardDelete, onCardClick }) {
   const isOwn = ownerId && currentUser?._id && ownerId === currentUser._id;
 
   const likes = Array.isArray(card?.likes) ? card.likes : [];
-  const isLiked = card?.isLiked || 
+  const isLiked =
+    card?.isLiked ||
     likes.some((like) =>
       typeof like === "string"
         ? like === currentUser?._id
         : like?._id === currentUser?._id
     );
+
+  const cardLikeButtonClassName = `card__like-button ${
+    isLiked ? "card__like-button_is-active" : ""
+  }`;
 
   return (
     <li className="card">
@@ -27,7 +32,7 @@ export default function Card({ card, onCardLike, onCardDelete, onCardClick }) {
         className="card__image"
         src={card?.link || ""}
         alt={card?.name || "Imagem do card"}
-        onClick={() => onCardClick(card)}
+        onClick={() => onCardClick?.(card)}
       />
 
       {isOwn && (
@@ -35,7 +40,7 @@ export default function Card({ card, onCardLike, onCardDelete, onCardClick }) {
           type="button"
           className="card__delete-button"
           aria-label="Excluir"
-          onClick={() => onCardDelete(card)}
+          onClick={() => onCardDelete?.(card)}
         >
           <img className="card__icon" src={trashIcon} alt="" />
         </button>
@@ -46,12 +51,9 @@ export default function Card({ card, onCardLike, onCardDelete, onCardClick }) {
 
         <button
           type="button"
-          className="card__like-button"
+          className={cardLikeButtonClassName}
           aria-label={isLiked ? "Descurtir" : "Curtir"}
-          onClick={() => {
-            console.log("CLICOU NO LIKE DO CARD:", card._id);
-            onCardLike(card);
-          }}
+          onClick={() => onCardLike?.(card)}
         >
           <img
             className="card__icon"

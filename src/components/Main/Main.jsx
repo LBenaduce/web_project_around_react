@@ -4,6 +4,7 @@ import Popup from "../Popup/Popup";
 import EditProfile from "../EditProfile/EditProfile";
 import EditAvatar from "../EditAvatar/EditAvatar";
 import NewCard from "../NewCard/NewCard";
+import ImagePopup from "../ImagePopup/ImagePopup";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Main.css";
 
@@ -12,6 +13,7 @@ export default function Main({
   onCardLike,
   onCardDelete,
   onCardClick,
+  selectedCard,
   onOpenPopup,
   popup,
   onClosePopup,
@@ -37,7 +39,6 @@ export default function Main({
               alt="Avatar do perfil"
             />
           ) : null}
-
           <div className="profile__avatar-overlay" />
         </div>
 
@@ -100,6 +101,12 @@ export default function Main({
       >
         <NewCard onAddPlaceSubmit={onAddPlaceSubmit} />
       </Popup>
+
+      <ImagePopup
+        card={selectedCard}
+        isOpen={popup === "image"}
+        onClose={onClosePopup}
+      />
     </main>
   );
 }
