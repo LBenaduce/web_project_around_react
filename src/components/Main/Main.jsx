@@ -4,7 +4,7 @@ import Popup from "../Popup/Popup";
 import EditProfile from "../EditProfile/EditProfile";
 import EditAvatar from "../EditAvatar/EditAvatar";
 import NewCard from "../NewCard/NewCard";
-import ImagePopup from "../imagePopup/imagePopup";
+import ImagePopup from "../imagePopup/ImagePopup";
 import CurrentUserContext from "../../contexts/CurrentUserContext";
 import "./Main.css";
 
